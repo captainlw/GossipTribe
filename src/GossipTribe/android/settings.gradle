@@ -1,0 +1,3 @@
+rootProject.name = 'GossipTribe'
+
+include ':app'

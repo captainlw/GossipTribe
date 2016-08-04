@@ -4,34 +4,66 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
+    AppRegistry,
+    StyleSheet,
+    Navigator,
+    BackAndroid,
+
 } from 'react-native';
 
+
+import Main from './Main';
+var _navigator;
+
+
 class GossipTribe extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+      if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+        _navigator.pop();
+        return true;
+      }
+      return false;
+    });
+  }
   render() {
+
+    let defaultName='main';
+    let defaultComponent = Main;
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+        <Navigator
+            style={styles.init}
+            initialRoute={{name: defaultName,component: defaultComponent}}
+            configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+            renderScene={
+              (route,navigator)=>{
+                let Component = route.component;
+                _navigator = navigator;
+                return <Component {...route.params} navigator={navigator}/>
+              }
+            }
+        />
     );
   }
+
+
 }
 
+
 const styles = StyleSheet.create({
+
+  init: {
+    flex:1,
+  },
+
   container: {
     flex: 1,
     justifyContent: 'center',

@@ -20,7 +20,7 @@ import {
 let lineHeight = 1 / PixelRatio.get();
 var API_KEY = '7waqfqbprs7pajbz28mqf6vz';
 var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json';
-var PAGE_SIZE = 25;
+var PAGE_SIZE = 10;
 var PARAMS = '?apikey=' + API_KEY + '&page_limit=' + PAGE_SIZE;
 var REQUEST_URL = API_URL + PARAMS;
 
@@ -100,7 +100,8 @@ export default  class Main extends Component {
     _praise(action) {
         alert('点赞');
     }
-    _goMovement(action){
+
+    _goMovement(action) {
         alert('活动详情');
     }
 
@@ -138,15 +139,15 @@ export default  class Main extends Component {
 
     rendorMovieMent(data, sectionDI, rowID) {
         return (<View style={styles.movement_list_item}>
-            <TouchableOpacity  onPress={this._goMovement.bind(this, 'movement')}>
-            <View style={styles.movement_list_item_root}>
-                <Image style={styles.movement_list_item_image} source={require('./res/zuoping.jpg')}/>
-                <View style={styles.movement_list_item_content}>
-                    <Text style={styles.movement_list_item_content_title}>来自未来的你报名</Text>
-                    <Text style={styles.movement_list_item_content_time}>2016-05-02</Text>
+            <TouchableOpacity onPress={this._goMovement.bind(this, 'movement')}>
+                <View style={styles.movement_list_item_root}>
+                    <Image style={styles.movement_list_item_image} source={require('./res/zuoping.jpg')}/>
+                    <View style={styles.movement_list_item_content}>
+                        <Text style={styles.movement_list_item_content_title}>来自未来的你报名</Text>
+                        <Text style={styles.movement_list_item_content_time}>2016-05-02</Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.line}/>
+                <View style={styles.line}/>
             </TouchableOpacity>
         </View>);
     }
@@ -204,6 +205,9 @@ export default  class Main extends Component {
                                    resizeMode={"stretch"}/>
                         </TouchableOpacity>
                     </View>
+                </View>
+                <View style={styles.loading}>
+                    <Text style={styles.loadingText}>正在加载数据...</Text>
                 </View>
 
             </View>
@@ -295,6 +299,16 @@ const styles = StyleSheet.create({
 
     init: {
         flex: 1,
+    },
+
+    loading: {
+        flex: 1,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+
+    loadingText: {
+        fontSize: 20,
     },
 
     container: {
@@ -472,19 +486,18 @@ const styles = StyleSheet.create({
         height: 100,
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft:10,
+        marginLeft: 10,
     },
     movement_list_item_image: {
         width: 100,
         height: 80,
     },
-    movement_list_item_content: {
-    },
+    movement_list_item_content: {},
     movement_list_item_content_title: {
         fontSize: 18,
         fontWeight: 'bold',
         marginLeft: 10,
-        marginBottom:10,
+        marginBottom: 10,
     },
     movement_list_item_content_time: {
         marginLeft: 10,

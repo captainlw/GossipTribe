@@ -8,6 +8,9 @@ import PagerTitleIndicator from './indicator/PagerTitleIndicator';
 import IndicatorViewPager from './IndicatorViewPager';
 import ProductPreview from './ProductPriview';
 import AddProduct from './AddProduct';
+import MovementDetails from './MovementDetials';
+import {Video} from 'react-native-media-kit';
+
 import {
     StyleSheet,
     Text,
@@ -26,6 +29,15 @@ var REQUEST_URL = API_URL + PARAMS;
 
 var MDATA = ['row1', 'row2', 'row3', 'row4', 'row5', 'row6', 'row7', 'row8', 'row9', 'row10', 'row11', 'row12', 'row13', 'row14', 'row15', 'row16', 'row17', 'row18', 'row19', 'row20', 'row21', 'row22', 'row23', 'row24',];
 
+const PDATA = [
+    'https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8',
+    'http://cdn3.viblast.com/streams/hls/airshow/playlist.m3u8',
+    'http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8',
+    'http://content.jwplatform.com/manifests/vM7nH0Kl.m3u8',
+    'http://vevoplaylist-live.hls.adaptive.level3.net/vevo/ch3/appleman.m3u8',
+    'http://playertest.longtailvideo.com/adaptive/captions/playlist.m3u8',
+    'http://playertest.longtailvideo.com/adaptive/oceans_aes/oceans_aes.m3u8'
+];
 export default  class Main extends Component {
 
     constructor(props) {
@@ -39,12 +51,16 @@ export default  class Main extends Component {
             movementDataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
+            programDataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            }),
         };
     }
 
     componentDidMount() {
         this.setData();
         this.setMovementData();
+        this.setProgramData();
     }
 
     setData() {
@@ -66,6 +82,13 @@ export default  class Main extends Component {
         });
     }
 
+    setProgramData() {
+        this.setState({
+            programDataSource: this.state.dataSource.cloneWithRows(PDATA),
+        });
+    }
+
+
     _renderTitleIndicator() {
         return <PagerTitleIndicator titles={['精选展示', '最近更新']}/>;
     }
@@ -77,7 +100,8 @@ export default  class Main extends Component {
             component: ProductPreview,
             params: {
                 id: id,
-                imagesource: movie.posters.thumbnail,
+                // imagesource: movie.posters.thumbnail,
+                imagesource: 'https://www.baidu.com/img/bd_logo1.png',
             }
         });
     }
@@ -102,7 +126,13 @@ export default  class Main extends Component {
     }
 
     _goMovement(action) {
-        alert('活动详情');
+        this.props.navigator.push({
+            name: 'MovementDetails',
+            component: MovementDetails,
+            params: {
+                url: "https://www.baidu.com",
+            }
+        });
     }
 
     renderMovie(movie, sectionDI, rowID) {
@@ -150,6 +180,29 @@ export default  class Main extends Component {
                 <View style={styles.line}/>
             </TouchableOpacity>
         </View>);
+    }
+
+    rendorProgram(data, sectionDI, rowID) {
+        return (
+            <View style={styles.program_list_item}>
+                <Video
+                    style={styles.program_video}
+                    src={data}
+                    autoplay={false}
+                    preload={'none'}
+                    loop={false}
+                    controls={true}
+                    muted={false}
+                    poster={'https://www.baidu.com/img/bd_logo1.png'}/>
+                <View style={styles.program_video_content_root}>
+                    <Text style={styles.program_video_content}>20160628期 画画学成语,可爱的细菌大作战</Text>
+                </View>
+                <View style={styles.program_video_time_root}>
+                    <Text style={styles.program_video_time}>6.28</Text>
+                </View>
+
+            </View>
+        );
     }
 
 
@@ -228,6 +281,9 @@ export default  class Main extends Component {
             <View style={styles.program_title}>
                 <Text style={styles.program_title_text}>节目</Text>
             </View>
+            <ListView
+                dataSource={this.state.programDataSource}
+                renderRow={this.rendorProgram.bind(this)}/>
         </View>
 
         var personalView = <View style={styles.container}>
@@ -303,8 +359,8 @@ const styles = StyleSheet.create({
 
     loading: {
         flex: 1,
-        alignItems:'center',
-        justifyContent:'center',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
     loadingText: {
@@ -503,6 +559,36 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         color: '#ADADAD',
         fontSize: 13,
+    },
+
+
+    program_list_item: {
+        height: 180,
+    },
+
+    program_video: {
+        flex: 1,
+        marginTop: 10,
+        backgroundColor: 'black',
+    },
+
+    program_video_content_root: {
+        backgroundColor: 'white',
+    },
+
+    program_video_content: {
+        marginLeft: 10,
+        fontWeight: 'bold',
+
+    },
+
+    program_video_time_root: {
+        backgroundColor: 'white',
+    },
+
+    program_video_time: {
+        marginLeft: 10,
+        backgroundColor: 'white',
     },
 
     line: {

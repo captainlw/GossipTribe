@@ -28,8 +28,10 @@ export default class AddProduct extends Component {
 
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             avatarSource: require('./res/add.png'),
+            productName: 'apple',
+            productCreateAge: 1,
         }
     }
 
@@ -41,11 +43,11 @@ export default class AddProduct extends Component {
             }
         }
         else {
-            alert("发布作品");
+            alert("发布作品: "+this.state.productName+"  "+ this.state.productCreateAge);
         }
     }
 
-    _addProduct(action){
+    _addProduct(action) {
 
         ImagePicker.showImagePicker(options, (response) => {
             if (response.didCancel) {
@@ -87,7 +89,7 @@ export default class AddProduct extends Component {
 
                 <View style={styles.product_content_image_root}>
                     <TouchableOpacity onPress={this._addProduct.bind(this, 0)}>
-                    <Image style={styles.product_content_image} source={this.state.avatarSource}/>
+                        <Image style={styles.product_content_image} source={this.state.avatarSource}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.line}/>
@@ -95,7 +97,8 @@ export default class AddProduct extends Component {
                     <Text style={styles.product_content_name_tag}>作品名称</Text>
                     <TextInput style={styles.product_content_name_value} placeholder={'必填'}
                                underlineColorAndroid={'transparent'}
-                               placeholderTextColor={'#ADADAD'}/>
+                               placeholderTextColor={'#ADADAD'}
+                               onChangeText={(productName)=>this.setState({productName})}/>
                 </View>
                 <View style={styles.line}/>
 
@@ -103,7 +106,8 @@ export default class AddProduct extends Component {
                     <Text style={styles.product_content_age_tag}>作品创作年龄</Text>
                     <TextInput style={styles.product_content_age_value} placeholder={'必填, 数字'}
                                underlineColorAndroid={'transparent'} keyboardType={'numeric'}
-                               placeholderTextColor={'#ADADAD'}/>
+                               placeholderTextColor={'#ADADAD'}
+                               onChangeText={(productCreateAge)=>this.setState({productCreateAge})}/>
                 </View>
                 <View style={styles.line}/>
                 <View style={styles.product_content_description_root}>
@@ -188,7 +192,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         width: 100,
         color: 'grey',
-        textAlign:'right',
+        textAlign: 'right',
 
     },
 
@@ -207,7 +211,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         width: 100,
         color: 'grey',
-        textAlign:'right',
+        textAlign: 'right',
     },
     product_content_description_root: {
         flex: 1,

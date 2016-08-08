@@ -10,7 +10,7 @@ import ProductPreview from './ProductPriview';
 import AddProduct from './AddProduct';
 import MovementDetails from './MovementDetials';
 import {Video} from 'react-native-media-kit';
-
+import Search from './SearchActive'
 import {
     StyleSheet,
     Text,
@@ -108,7 +108,12 @@ export default  class Main extends Component {
 
     _addProduct(action) {
         if (action == 0) {
-            alert("搜索");
+            this.props.navigator.push({
+                name: 'Search',
+                component: Search,
+            });
+
+
         } else {
             this.props.navigator.push({
                 name: 'AddProduct',
@@ -135,7 +140,7 @@ export default  class Main extends Component {
         });
     }
 
-    renderMovie(movie, sectionDI, rowID) {
+    renderGallery(movie, sectionDI, rowID) {
 
         return <View style={styles.gallery_item_style}>
             <View style={styles.gallery_item_top}>
@@ -200,7 +205,6 @@ export default  class Main extends Component {
                 <View style={styles.program_video_time_root}>
                     <Text style={styles.program_video_time}>6.28</Text>
                 </View>
-
             </View>
         );
     }
@@ -232,12 +236,12 @@ export default  class Main extends Component {
                     <View>
                         <ListView
                             dataSource={this.state.dataSource}
-                            renderRow={this.renderMovie.bind(this)}/>
+                            renderRow={this.renderGallery.bind(this)}/>
                     </View>
                     <View>
                         <ListView
                             dataSource={this.state.dataSource}
-                            renderRow={this.renderMovie.bind(this)}/>
+                            renderRow={this.renderGallery.bind(this)}/>
                     </View>
                 </IndicatorViewPager>
 

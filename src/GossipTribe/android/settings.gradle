@@ -4,6 +4,8 @@ include ':app'
 include ':react-native-image-zoom'
 include ':react-native-image-picker'
 include ':react-native-media-kit'
+include ':react-native-dialogs'
 project(':react-native-image-picker').projectDir = file('../node_modules/react-native-image-picker/android')
 project(':react-native-image-zoom').projectDir = file('../node_modules/react-native-image-zoom/android')
-project(':react-native-media-kit').projectDir = new File('../node_modules/react-native-media-kit/android')
+project(':react-native-media-kit').projectDir = file('../node_modules/react-native-media-kit/android')
+project(':react-native-dialogs').projectDir = file('../node_modules/react-native-dialogs/android')

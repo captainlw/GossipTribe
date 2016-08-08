@@ -8,10 +8,10 @@
   "dependencies": {
     "react": "15.2.1",
     "react-native": "0.30.0",
+    "react-native-dialogs": "0.0.16",
     "react-native-image-picker": "^0.21.4",
     "react-native-image-zoom": "^0.27.0",
     "react-native-media-kit": "0.0.14",
-    "react-native-tab-navigator": "^0.3.2",
-    "react-native-video": "^0.8.0"
+    "react-native-tab-navigator": "^0.3.2"
   }
 }

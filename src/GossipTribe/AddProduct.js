@@ -12,6 +12,7 @@ import {
     TextInput,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import DialogAndroid from  'react-native-dialogs';
 let lineHeight = 1 / PixelRatio.get();
 
 var options = {
@@ -24,14 +25,19 @@ var options = {
         path: 'images'
     }
 };
+
+var dialogOptions = {
+    title: '作品信息未填写完整',
+    positiveText: '知道了',
+};
 export default class AddProduct extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             avatarSource: require('./res/add.png'),
-            productName: 'apple',
-            productCreateAge: 1,
+            productCreateAge: "",
+            productName: "",
         }
     }
 
@@ -43,18 +49,31 @@ export default class AddProduct extends Component {
             }
         }
         else {
-            alert("发布作品: "+this.state.productName+"  "+ this.state.productCreateAge);
+            //资料未填写,弹出对话框提示
+            if (this.state.productCreateAge == "" || this.state.productName == "") {
+                var dialog = new DialogAndroid();
+                dialog.set(dialogOptions);
+                dialog.show();
+            }
+            //发布作品,向服务器上传数据
+            else{
+                alert("发布作品： " + this.state.productCreateAge+"  "+this.state.productName);
+            }
+
+
         }
     }
 
     _addProduct(action) {
-
+        //跳转到相机或者图库
         ImagePicker.showImagePicker(options, (response) => {
+            //类似onActivityResult
             if (response.didCancel) {
             }
             else if (response.error) {
             }
             else {
+                //获得照相或图库返回的数据
                 // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
                 const source = {uri: response.uri, isStatic: true};
                 this.setState({

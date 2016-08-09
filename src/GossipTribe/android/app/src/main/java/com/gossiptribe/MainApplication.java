@@ -11,6 +11,8 @@ import com.facebook.react.shell.MainReactPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.greatdroid.reactnative.media.MediaKitPackage;
 import com.aakashns.reactnativedialogs.ReactNativeDialogsPackage;
+import com.lixiang.rn_umeng_share.*;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
           new ReactImageZoom(),
            new ImagePickerPackage(),
            new MediaKitPackage(),
-           new ReactNativeDialogsPackage()
+           new ReactNativeDialogsPackage(),
+           new UmengSharePackage()
       );
     }
   };

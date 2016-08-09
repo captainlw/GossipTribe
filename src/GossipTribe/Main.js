@@ -11,6 +11,9 @@ import AddProduct from './AddProduct';
 import MovementDetails from './MovementDetials';
 import {Video} from 'react-native-media-kit';
 import Search from './SearchActive'
+import UmengShare from 'rn-umeng-share'
+
+
 import {
     StyleSheet,
     Text,
@@ -55,12 +58,19 @@ export default  class Main extends Component {
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
         };
+        Main.initShare();
+
     }
 
     componentDidMount() {
         this.setData();
         this.setMovementData();
         this.setProgramData();
+    }
+
+    static initShare(){
+        UmengShare.setQQZone('1105543048','JFBbZIJ21sD8uhKP');
+        UmengShare.setWXAppId('wx967daebe835fbeac','5bb696d9ccd75a38c8a0bfe0675559b3');
     }
 
     setData() {
@@ -122,10 +132,12 @@ export default  class Main extends Component {
         }
     }
 
+    //分享功能
     _share(action) {
-        alert('分享');
+        UmengShare.openShareAction('欢迎使用','分享',"http://www.baidu.com",{uri:"https://www.baidu.com/img/bd_logo1.png"});
     }
 
+    //点赞功能
     _praise(action) {
         alert('点赞');
     }

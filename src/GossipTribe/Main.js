@@ -116,20 +116,20 @@ export default  class Main extends Component {
         });
     }
 
-    _addProduct(action) {
-        if (action == 0) {
-            this.props.navigator.push({
-                name: 'Search',
-                component: Search,
-            });
+    //搜索功能
+    _search(){
+        this.props.navigator.push({
+            name: 'Search',
+            component: Search,
+        });
+    }
 
-
-        } else {
+    //发布作品
+    _addProduct() {
             this.props.navigator.push({
                 name: 'AddProduct',
                 component: AddProduct,
             });
-        }
     }
 
     //分享功能
@@ -223,25 +223,23 @@ export default  class Main extends Component {
 
 
     render() {
-        var GalleryView;
-        if (this.state.loaded) {
-            GalleryView = <View style={styles.container}>
+        let GalleryView;
+
+        let GalleryTitleView =
                 <View style={styles.gallery_title_root}>
                     <Text style={styles.gallery_title_empty}></Text>
                     <Text style={styles.gallery_title_text}>小小画廊</Text>
-
                     <View style={styles.gallery_title_touch_parent}>
-
-                        <TouchableOpacity onPress={this._addProduct.bind(this, 0)}>
+                        <TouchableOpacity onPress={this._search.bind(this)}>
                             <Image style={styles.gallery_title_search} source={require('./res/search.png')}
                                    resizeMode={"stretch"}/>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this._addProduct.bind(this, 1)}>
-                            <Image style={styles.gallery_title_add} source={require('./res/add.png')}
-                                   resizeMode={"stretch"}/>
-                        </TouchableOpacity>
                     </View>
-                </View>
+                </View>;
+
+        if (this.state.loaded) {
+            GalleryView = <View style={styles.container}>
+                {GalleryTitleView}
                 <IndicatorViewPager
                     style={{flex: 1}}
                     indicator={this._renderTitleIndicator()}>
@@ -249,6 +247,12 @@ export default  class Main extends Component {
                         <ListView
                             dataSource={this.state.dataSource}
                             renderRow={this.renderGallery.bind(this)}/>
+                        <View style={styles.floating}>
+                            <TouchableOpacity onPress={this._addProduct.bind(this)}>
+                            <Image source={require('./res/add.png')} style={styles.floatingImage}/>
+                            </TouchableOpacity>
+                            <Text style={styles.floatingText}>发布作品</Text>
+                        </View>
                     </View>
                     <View>
                         <ListView
@@ -256,29 +260,15 @@ export default  class Main extends Component {
                             renderRow={this.renderGallery.bind(this)}/>
                     </View>
                 </IndicatorViewPager>
-
             </View>
         }
+
         else {
             GalleryView = <View style={styles.container}>
-                <View style={styles.gallery_title_root}>
-                    <Text style={styles.gallery_title_empty}></Text>
-                    <Text style={styles.gallery_title_text}>小小画廊</Text>
-                    <View style={styles.gallery_title_touch_parent}>
-                        <TouchableOpacity onPress={this._addProduct.bind(this, 0)}>
-                            <Image style={styles.gallery_title_search} source={require('./res/search.png')}
-                                   resizeMode={"stretch"}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this._addProduct.bind(this, 1)}>
-                            <Image style={styles.gallery_title_add} source={require('./res/add.png')}
-                                   resizeMode={"stretch"}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                {GalleryTitleView}
                 <View style={styles.loading}>
                     <Text style={styles.loadingText}>正在加载数据...</Text>
                 </View>
-
             </View>
         }
 
@@ -373,6 +363,26 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 
+    floating:{
+        width:60,
+        height:60,
+        backgroundColor:'#FFC125',
+        position: 'absolute',
+        bottom:10,
+        right:20,
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:30,
+    },
+
+    floatingImage:{
+        width:30,
+        height:30,
+    },
+    floatingText:{
+        fontSize:11,
+    },
+
     loading: {
         flex: 1,
         alignItems: 'center',
@@ -432,11 +442,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
 
-    gallery_title_add: {
-        height: 30,
-        width: 30,
-        marginRight: 10,
-    },
 
     gallery_item_style: {
         marginLeft: 10,

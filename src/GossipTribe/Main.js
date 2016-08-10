@@ -12,8 +12,7 @@ import MovementDetails from './MovementDetials';
 import {Video} from 'react-native-media-kit';
 import Search from './SearchActive'
 import UmengShare from 'rn-umeng-share'
-
-
+import LoadingView from './view/LoadingView';
 import {
     StyleSheet,
     Text,
@@ -50,51 +49,56 @@ export default  class Main extends Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
-            loaded: false,
+            galleryloaded: false,
             movementDataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
+            movementLoaded: false,
             programDataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
+            programLoaded: false,
         };
         Main.initShare();
 
     }
 
+    //生命周期方法，异步获取服务器数据进行加载
     componentDidMount() {
-        this.setData();
+        this.setGalleryData();
         this.setMovementData();
         this.setProgramData();
     }
 
+    //友盟分享设置qq和微信key
     static initShare(){
         UmengShare.setQQZone('1105543048','JFBbZIJ21sD8uhKP');
         UmengShare.setWXAppId('wx967daebe835fbeac','5bb696d9ccd75a38c8a0bfe0675559b3');
     }
 
-    setData() {
+    setGalleryData() {
         fetch(REQUEST_URL)
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
-                    loaded: true,
+                    galleryloaded: true,
                 });
             })
             .done();
     }
 
-
     setMovementData() {
         this.setState({
             movementDataSource: this.state.dataSource.cloneWithRows(MDATA),
+            movementLoaded: true,
         });
     }
 
     setProgramData() {
         this.setState({
             programDataSource: this.state.dataSource.cloneWithRows(PDATA),
+            programLoaded: true,
         });
     }
 
@@ -237,7 +241,7 @@ export default  class Main extends Component {
                     </View>
                 </View>;
 
-        if (this.state.loaded) {
+        if (this.state.galleryloaded) {
             GalleryView = <View style={styles.container}>
                 {GalleryTitleView}
                 <IndicatorViewPager
@@ -266,31 +270,51 @@ export default  class Main extends Component {
         else {
             GalleryView = <View style={styles.container}>
                 {GalleryTitleView}
-                <View style={styles.loading}>
-                    <Text style={styles.loadingText}>正在加载数据...</Text>
-                </View>
+                <LoadingView/>
             </View>
         }
 
+        let movementTitleView =  <View style={styles.movement_title}>
+            <Text style={styles.movement_title_text}>活动</Text>
+        </View>;
 
-        var movementView = <View style={styles.container}>
-            <View style={styles.movement_title}>
-                <Text style={styles.movement_title_text}>活动</Text>
+        let movementView;
+
+        if (this.state.movementLoaded) {
+            movementView = <View style={styles.container}>
+                {movementTitleView}
+                <ListView
+                    dataSource={this.state.movementDataSource}
+                    renderRow={this.rendorMovieMent.bind(this)}/>
             </View>
-            <ListView
-                dataSource={this.state.movementDataSource}
-                renderRow={this.rendorMovieMent.bind(this)}/>
-        </View>
-
-
-        var programView = <View style={styles.container}>
-            <View style={styles.program_title}>
-                <Text style={styles.program_title_text}>节目</Text>
+        }
+        else {
+            movementView = <View style={styles.container}>
+                {movementTitleView}
+                <LoadingView/>
             </View>
-            <ListView
-                dataSource={this.state.programDataSource}
-                renderRow={this.rendorProgram.bind(this)}/>
-        </View>
+        }
+
+        let programTitleView = <View style={styles.program_title}>
+            <Text style={styles.program_title_text}>节目</Text>
+        </View>;
+
+        let programView;
+
+        if (this.state.programLoaded) {
+            programView = <View style={styles.container}>
+                {programTitleView}
+                <ListView
+                    dataSource={this.state.programDataSource}
+                    renderRow={this.rendorProgram.bind(this)}/>
+            </View>
+        }
+        else {
+            programView = <View style={styles.container}>
+                {programTitleView}
+                <LoadingView/>
+            </View>
+        }
 
         var personalView = <View style={styles.container}>
             <View style={styles.personal_title}>
@@ -298,11 +322,8 @@ export default  class Main extends Component {
             </View>
         </View>
 
-
         return (
-
             <TabNavigator >
-
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'gallery'}
                     title="小小画廊"
@@ -381,16 +402,6 @@ const styles = StyleSheet.create({
     },
     floatingText:{
         fontSize:11,
-    },
-
-    loading: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    loadingText: {
-        fontSize: 20,
     },
 
     container: {

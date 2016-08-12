@@ -13,6 +13,7 @@ import {Video} from 'react-native-media-kit';
 import Search from './SearchActive'
 import UmengShare from 'rn-umeng-share'
 import LoadingView from './view/LoadingView';
+import Personal from './app/page/Personal';
 import {
     StyleSheet,
     Text,
@@ -316,11 +317,7 @@ export default  class Main extends Component {
             </View>
         }
 
-        var personalView = <View style={styles.container}>
-            <View style={styles.personal_title}>
-                <Text style={styles.personal_title_text}>个人专区</Text>
-            </View>
-        </View>
+        var personalView = <Personal _navigator={this.props.navigator}/>
 
         return (
             <TabNavigator >

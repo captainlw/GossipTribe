@@ -30,7 +30,10 @@ export default class Personal extends Component{
       <TouchableOpacity onPress={()=>{
           this.props._navigator.push({
             component:PersonInfo,
-            _navigator:this.props._navigator
+            params:{
+              name:"个人信息",
+              _navigator:this.props._navigator,
+            }
           })
       }}>
       <View style={[styles.menuContainer,{marginTop:20}]}>

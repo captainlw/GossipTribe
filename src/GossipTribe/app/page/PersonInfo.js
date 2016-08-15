@@ -26,36 +26,33 @@ var options = {
 };
 
 export default class PersonInfo extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-        avatarSource: require('../.././image/favicon.jpeg'),
+      constructor(props) {
+        super(props);
+        this.state = {
+            avatarSource: require('../.././image/favicon.jpeg'),
+        }
+      }
+
+     _changeIcon(){
+       ImagePicker.showImagePicker(options, (response) => {
+         //类似onActivityResult
+         if (response.didCancel) {
+         }
+         else if (response.error) {
+         }
+         else {
+           //获得照相或图库返回的数据
+           const source = {uri: response.uri, isStatic: true};
+           this.setState({avatarSource:source});
+         }
+       });
+     }
+
+    _goBack(){
+      if(this._navigator&&this._navigator.getCurrentRoutes.length>1){
+        this._navigator.pop();
+      }
     }
-  }
-
- _changeIcon(){
-   //跳转到相机或者图库
-   ImagePicker.showImagePicker(options, (response) => {
-     //类似onActivityResult
-     if (response.didCancel) {
-     }
-     else if (response.error) {
-     }
-     else {
-       //获得照相或图库返回的数据
-       const source = {uri: response.uri, isStatic: true};
-       this.setState({avatarSource:source}).bind(this);
-     }
-   });
- }
-
-_goBack(){
-  if(this._navigator&&this._navigator.getCurrentRoutes.length>1){
-    this._navigator.pop();
-  }
-
-
-}
 
 
   render(){
@@ -80,10 +77,10 @@ _goBack(){
                     left:10}}/>
       </TouchableOpacity>
       <Text style={{textAlign:'center',
-                    fontSize:20,}}>个人信息</Text>
+                    fontSize:20,}}>{this.props.name}</Text>
       </View>
       <ScrollView>
-      <TouchableOpacity onPress={this._changeIcon.bind()}>
+      <TouchableOpacity onPress={this._changeIcon.bind(this)}>
         <View style={[styles.menuContainer,styles.menuIcon]}>
           <Text style={{}}>头像</Text>
           <View style={{flexDirection:'row',

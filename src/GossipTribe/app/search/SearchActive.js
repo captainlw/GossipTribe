@@ -63,7 +63,7 @@ export default class SearchActive extends Component {
                         <Text style={styles.searchCancelText}>取消</Text>
                     </TouchableOpacity>
                     <View style={styles.search_icon_root}>
-                    <Image style={styles.search_icon} source={require('./res/search_icon.png')}/>
+                    <Image style={styles.search_icon} source={require('../../res/image/search_icon.png')}/>
                         </View>
                     <View style={styles.searchInputRoot}>
                         <TextInput style={styles.searchInput} keyboardType={'web-search'}
@@ -75,7 +75,7 @@ export default class SearchActive extends Component {
                     </View>
                     <View style={styles.delete_icon_root}>
                         <TouchableWithoutFeedback  onPress={this._delete.bind(this)}>
-                            <Image style={styles.delete_icon} source={require('./res/delete.png')}/>
+                            <Image style={styles.delete_icon} source={require('../../res/image/delete.png')}/>
                         </TouchableWithoutFeedback>
                     </View>
                     <TouchableOpacity style={styles.searchGo} onPress={this._go.bind(this,1)}>

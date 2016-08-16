@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 
-import Main from './Main';
+import Main from './app/Main';
 var _navigator;
 
 

@@ -15,7 +15,7 @@ import {
     Image,
 } from 'react-native';
 var MDATA = ['row1', 'row2', 'row3', 'row4', 'row5', 'row6', 'row7', 'row8', 'row9', 'row10', 'row11', 'row12', 'row13', 'row14', 'row15'];
-import ProductPreview from './ProductPriview';
+import ProductPreview from '../product/ProductPriview';
 export default class SearchResult extends Component {
 
     constructor(props) {
@@ -63,7 +63,7 @@ export default class SearchResult extends Component {
         return (
             <View style={styles.list_item_style}>
                 <View style={styles.list_item_top}>
-                    <Image style={styles.list_item_icon} source={require('./res/touxiang2.jpg')}/>
+                    <Image style={styles.list_item_icon} source={require('../../res/image/touxiang2.jpg')}/>
                     <View style={styles.list_item_content}>
                         <Text style={styles.list_item_name}>乔乔妞妞</Text>
                         <Text style={styles.list_item_info} numberOfLines={1}>创作年龄5岁 上海 浦东新区少年宫</Text>
@@ -71,7 +71,7 @@ export default class SearchResult extends Component {
                     <Text style={styles.list_item_date} numberOfLines={1}>2016-02-01</Text>
                 </View>
                 <TouchableOpacity onPress={this._onPressButton.bind(this, rowID, data)}>
-                    <Image style={styles.list_item_product} source={require('./res/zuoping.jpg')}/>
+                    <Image style={styles.list_item_product} source={require('../../res/image/zuoping.jpg')}/>
                 </TouchableOpacity>
 
                 <Text style={styles.list_item_produce_title}>《小蜗牛上树》</Text>
@@ -80,11 +80,11 @@ export default class SearchResult extends Component {
                     <Text style={styles.list_item_produce_id}>编号 {data}</Text>
                     <TouchableOpacity style={styles.list_item_produce_share_touch}
                                       onPress={this._share.bind(this, 'share')}>
-                        <Image style={styles.list_item_produce_share} source={require('./res/share.png')}/>
+                        <Image style={styles.list_item_produce_share} source={require('../../res/image/share.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.list_item_produce_praise_touch}
                                       onPress={this._praise.bind(this, 'praise')}>
-                        <Image style={styles.list_item_produce_praise} source={require('./res/praise.png')}/>
+                        <Image style={styles.list_item_produce_praise} source={require('../../res/image/praiseicon.png')}/>
                     </TouchableOpacity>
                 </View>
             </View>

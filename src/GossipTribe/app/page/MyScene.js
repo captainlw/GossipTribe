@@ -49,7 +49,7 @@ export default class MyScene extends Component{
                           </TouchableOpacity>
                         </View>
 
-                        <Image source={require('../.././image/favicon.jpeg')}
+                        <Image source={require('../../res/image/favicon.jpeg')}
                                style={{marginLeft:10,
                                        marginRight:10,
                                        width:310,
@@ -64,7 +64,7 @@ export default class MyScene extends Component{
                           <View  style={{flexDirection:'row',
                                          alignSelf:'center'}}>
                           <TouchableOpacity>
-                          <Image source={require('../.././image/praise.png')} style={{
+                          <Image source={require('../../res/image/praise.png')} style={{
                                 width:20,
                                 height:20,
                                 marginLeft:10,

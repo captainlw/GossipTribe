@@ -38,7 +38,7 @@ export default class Personal extends Component{
       }}>
       <View style={[styles.menuContainer,{marginTop:20}]}>
         <View style={styles.menuContainer2}>
-          <Image source={require('../.././image/favicon.jpeg')} style={styles.menuIcon}/>
+          <Image source={require('../../res/image/favicon.jpeg')} style={styles.menuIcon}/>
           <View style={{flexDirection:'column',
                       justifyContent:'flex-start',
                       alignItems:'center',
@@ -48,7 +48,7 @@ export default class Personal extends Component{
                 <Text>浦东新区少年宫</Text>
           </View>
           </View>
-          <Image source={require('../.././image/right.png')}
+          <Image source={require('../../res/image/right.png')}
                   style={styles.goToIcon}/>
         </View>
       </TouchableOpacity>
@@ -56,7 +56,7 @@ export default class Personal extends Component{
       <View style={{marginTop:20}}>
       <CustomItem
           menuName="个人空间"
-          icon={require('../.././image/personal.png')}
+          icon={require('../../res/image/personal.png')}
           onForward={()=>{
             this.props._navigator.push({
               component:PersonZone
@@ -65,7 +65,7 @@ export default class Personal extends Component{
         />
       <CustomItem
         menuName="积分"
-        icon={require('../.././image/intergate.png')}
+        icon={require('../../res/image/intergate.png')}
         onForward={()=>{
           this.props._navigator.push({
             component:PersonIntegration
@@ -74,7 +74,7 @@ export default class Personal extends Component{
 
       <CustomItem
         menuName="规则说明"
-        icon={require('../.././image/rule.png')}
+        icon={require('../../res/image/rule.png')}
         onForward={()=>{
           this.props._navigator.push({
             component:ChangeName
@@ -96,7 +96,7 @@ class CustomItem extends Component{
               <Image source={this.props.icon}/>
               <Text style={styles.menuText}>{this.props.menuName}</Text>
             </View>
-            <Image source={require('../.././image/right.png')}
+            <Image source={require('../../res/image/right.png')}
                   style={styles.goToIcon}/>
           </View>
         </TouchableOpacity>

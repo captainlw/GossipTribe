@@ -29,7 +29,7 @@ export default class PersonInfo extends Component{
       constructor(props) {
         super(props);
         this.state = {
-            avatarSource: require('../.././image/favicon.jpeg'),
+            avatarSource: require('../../res/image/favicon.jpeg'),
         }
       }
 
@@ -70,7 +70,7 @@ export default class PersonInfo extends Component{
                     padding:10,
                   }}>
       <TouchableOpacity onPress={this._goBack}>
-      <Image source={require('../.././image/back.png')}
+      <Image source={require('../../res/image/back.png')}
               style={{width:10,height:20,
                     position:'absolute',
                     top:5,
@@ -89,7 +89,7 @@ export default class PersonInfo extends Component{
             <Image source={this.state.avatarSource}
             style={styles.menuImage}/>
             <Image
-            source={require('../.././image/right.png')}/>
+            source={require('../../res/image/right.png')}/>
           </View>
         </View>
       </TouchableOpacity>
@@ -151,7 +151,7 @@ class MenuItem extends Component{
                           alignItems:'center'}}>
               <Text style={{marginRight:10}}>{this.props.params}</Text>
               <Image style={[styles.menuRight]}
-              source={require('../.././image/right.png')}/>
+              source={require('../../res/image/right.png')}/>
             </View>
           </View>
         </TouchableOpacity>

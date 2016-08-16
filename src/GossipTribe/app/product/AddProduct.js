@@ -36,7 +36,7 @@ export default class AddProduct extends Component {
         super(props);
         this.state = {
             hasImageData: false,
-            avatarSource: require('./res/add.png'),
+            avatarSource: require('../../res/image/add.png'),
             productCreateAge: "",
             productName: "",
             DELETE_HEIGHT : 0,
@@ -75,7 +75,7 @@ export default class AddProduct extends Component {
     _delete(){
 
         this.setState({
-            avatarSource: require('./res/add.png'),
+            avatarSource: require('../../res/image/add.png'),
             hasImageData: false,
             DELETE_HEIGHT : 0,
             DELETE_WIDTH : 0,
@@ -132,7 +132,7 @@ export default class AddProduct extends Component {
                         <Image style={styles.product_content_image} source={this.state.avatarSource}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={this._delete.bind(this)} style={styles.product_content_delete_touch}>
-                    <Image style={{width:this.state.DELETE_WIDTH,height:this.state.DELETE_HEIGHT}} source={require('./res/delete.png')}/>
+                    <Image style={{width:this.state.DELETE_WIDTH,height:this.state.DELETE_HEIGHT}} source={require('../../res/image/delete.png')}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.line}/>

@@ -6,7 +6,7 @@
 
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import IndicatorViewPager from '../IndicatorViewPager';
+import IndicatorViewPager from '../indicator/IndicatorViewPager';
 
 export default class PagerTitleIndicator extends Component {
     static propTypes = {

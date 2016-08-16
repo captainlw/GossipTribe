@@ -6,7 +6,7 @@
 
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View} from 'react-native';
-import ViewPager from './ViewPager';
+import ViewPager from '../view/ViewPager';
 
 const VIEWPAGER_REF = 'viewPager';
 const INDICATOR_REF = 'indicator';

@@ -5,7 +5,7 @@
 'use strict';
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View} from 'react-native';
-import IndicatorViewPager from '../IndicatorViewPager';
+import IndicatorViewPager from '../app/view/IndicatorViewPager';
 
 const DEFAULT_DOT_RADIUS = 6;
 export default class PagerDotIndicator extends Component {

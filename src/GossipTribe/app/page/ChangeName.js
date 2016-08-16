@@ -25,7 +25,7 @@ export default class ChangeName extends Component{
                                                  showClear:true})}
           value={this.state.textValue}
           />
-          <Image source={require('../.././image/clean.png')}
+          <Image source={require('../../res/image/clean.png')}
                   style={sceneStyle.clearIcon}
                                 />
         </View>

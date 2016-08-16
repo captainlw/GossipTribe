@@ -5,15 +5,15 @@
 import React, {Component} from 'react';
 import TabNavigator from 'react-native-tab-navigator';
 import PagerTitleIndicator from './indicator/PagerTitleIndicator';
-import IndicatorViewPager from './IndicatorViewPager';
-import ProductPreview from './ProductPriview';
-import AddProduct from './AddProduct';
-import MovementDetails from './MovementDetials';
+import IndicatorViewPager from './indicator/IndicatorViewPager';
+import ProductPreview from './product/ProductPriview';
+import AddProduct from './product/AddProduct';
+import MovementDetails from './product/MovementDetials';
 import {Video} from 'react-native-media-kit';
-import Search from './SearchActive'
+import Search from './search/SearchActive'
 import UmengShare from 'rn-umeng-share'
 import LoadingView from './view/LoadingView';
-import Personal from './app/page/Personal';
+import Personal from './page/Personal';
 import {
     StyleSheet,
     Text,
@@ -177,7 +177,7 @@ export default  class Main extends Component {
 
         return <View style={styles.gallery_item_style}>
             <View style={styles.gallery_item_top}>
-                <Image style={styles.gallery_item_icon} source={require('./res/touxiang2.jpg')}/>
+                <Image style={styles.gallery_item_icon} source={require('../res/image/touxiang2.jpg')}/>
                 <View style={styles.gallery_item_content}>
                     <Text style={styles.gallery_item_name}>乔乔妞妞</Text>
                     <Text style={styles.gallery_item_info} numberOfLines={1}>创作年龄5岁 上海 浦东新区少年宫</Text>
@@ -185,7 +185,7 @@ export default  class Main extends Component {
                 <Text style={styles.gallery_item_date} numberOfLines={1}>2016-02-01</Text>
             </View>
             <TouchableOpacity onPress={this._onPressButton.bind(this, rowID, movie)}>
-                <Image style={styles.gallery_item_product} source={require('./res/zuoping.jpg')}/>
+                <Image style={styles.gallery_item_product} source={require('../res/image/zuoping.jpg')}/>
             </TouchableOpacity>
 
             <Text style={styles.gallery_item_produce_title}>《小蜗牛上树》</Text>
@@ -194,11 +194,11 @@ export default  class Main extends Component {
                 <Text style={styles.gallery_item_produce_id}>编号 {movie.id}</Text>
                 <TouchableOpacity style={styles.gallery_item_produce_share_touch}
                                   onPress={this._share.bind(this, 'share')}>
-                    <Image style={styles.gallery_item_produce_share} source={require('./res/share.png')}/>
+                    <Image style={styles.gallery_item_produce_share} source={require('../res/image/share.png')}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.gallery_item_produce_praise_touch}
                                   onPress={this._praise.bind(this, 'praise')}>
-                    <Image style={styles.gallery_item_produce_praise} source={require('./res/praise.png')}/>
+                    <Image style={styles.gallery_item_produce_praise} source={require('../res/image/praiseicon.png')}/>
                 </TouchableOpacity>
             </View>
         </View>;
@@ -209,7 +209,7 @@ export default  class Main extends Component {
         return (<View style={styles.movement_list_item}>
             <TouchableOpacity onPress={this._goMovement.bind(this, 'movement')}>
                 <View style={styles.movement_list_item_root}>
-                    <Image style={styles.movement_list_item_image} source={require('./res/zuoping.jpg')}/>
+                    <Image style={styles.movement_list_item_image} source={require('../res/image/zuoping.jpg')}/>
                     <View style={styles.movement_list_item_content}>
                         <Text style={styles.movement_list_item_content_title}>来自未来的你报名</Text>
                         <Text style={styles.movement_list_item_content_time}>2016-05-02</Text>
@@ -278,7 +278,7 @@ export default  class Main extends Component {
                     <Text style={styles.gallery_title_text}>小小画廊</Text>
                     <View style={styles.gallery_title_touch_parent}>
                         <TouchableOpacity onPress={this._search.bind(this)}>
-                            <Image style={styles.gallery_title_search} source={require('./res/search.png')}
+                            <Image style={styles.gallery_title_search} source={require('../res/image/search.png')}
                                    resizeMode={"stretch"}/>
                         </TouchableOpacity>
                     </View>
@@ -298,7 +298,7 @@ export default  class Main extends Component {
                                 }/>
                         <View style={styles.floating}>
                             <TouchableOpacity onPress={this._addProduct.bind(this)}>
-                            <Image source={require('./res/add.png')} style={styles.floatingImage}/>
+                            <Image source={require('../res/image/add.png')} style={styles.floatingImage}/>
                             </TouchableOpacity>
                             <Text style={styles.floatingText}>发布作品</Text>
                         </View>
@@ -377,9 +377,9 @@ export default  class Main extends Component {
                     selected={this.state.selectedTab === 'gallery'}
                     title="小小画廊"
                     renderIcon={() => <Image style={styles.gallery_bottom_icon}
-                                             source={require('./res/tab_weixin_normal.png')}/>}
+                                             source={require('../res/image/tab_weixin_normal.png')}/>}
                     renderSelectedIcon={() => <Image style={styles.gallery_bottom_icon}
-                                                     source={require('./res/tab_weixin_pressed.png')}/>}
+                                                     source={require('../res/image/tab_weixin_pressed.png')}/>}
                     onPress={this.setSelectedGallery.bind(this)}>
                     {GalleryView}
                 </TabNavigator.Item>
@@ -388,9 +388,9 @@ export default  class Main extends Component {
                     selected={this.state.selectedTab === 'movement'}
                     title="活动"
                     renderIcon={() => <Image style={styles.gallery_bottom_icon}
-                                             source={require('./res/tab_address_normal.png')}/>}
+                                             source={require('../res/image/tab_address_normal.png')}/>}
                     renderSelectedIcon={() => <Image style={styles.gallery_bottom_icon}
-                                                     source={require('./res/tab_address_pressed.png')}/>}
+                                                     source={require('../res/image/tab_address_pressed.png')}/>}
                     onPress={this.setSelectedMovementTab.bind(this)}>
                     {movementView}
                 </TabNavigator.Item>
@@ -399,9 +399,9 @@ export default  class Main extends Component {
                     selected={this.state.selectedTab === 'program'}
                     title="节目"
                     renderIcon={() => <Image style={styles.gallery_bottom_icon}
-                                             source={require('./res/tab_find_frd_normal.png')}/>}
+                                             source={require('../res/image/tab_find_frd_normal.png')}/>}
                     renderSelectedIcon={() => <Image style={styles.gallery_bottom_icon}
-                                                     source={require('./res/tab_find_frd_pressed.png')}/>}
+                                                     source={require('../res/image/tab_find_frd_pressed.png')}/>}
                     onPress={this.setSelectedProgram.bind(this)}>
                     {programView}
                 </TabNavigator.Item>
@@ -410,9 +410,9 @@ export default  class Main extends Component {
                     selected={this.state.selectedTab === 'personal'}
                     title="个人专区"
                     renderIcon={() => <Image style={styles.gallery_bottom_icon}
-                                             source={require('./res/tab_settings_normal.png')}/>}
+                                             source={require('../res/image/tab_settings_normal.png')}/>}
                     renderSelectedIcon={() => <Image style={styles.gallery_bottom_icon}
-                                                     source={require('./res/tab_settings_pressed.png')}/>}
+                                                     source={require('../res/image/tab_settings_pressed.png')}/>}
                     onPress={() => this.setState({selectedTab: 'personal'})}>
                     {personalView}
                 </TabNavigator.Item>

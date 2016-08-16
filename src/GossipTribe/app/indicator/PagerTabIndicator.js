@@ -5,7 +5,7 @@
 'use strict';
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
-import IndicatorViewPager from '../IndicatorViewPager';
+import IndicatorViewPager from '../indicator/IndicatorViewPager';
 
 export default class PagerTabIndicator extends Component {
     static propTypes = {

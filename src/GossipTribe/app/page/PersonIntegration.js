@@ -45,7 +45,7 @@ class IntegrationNumber extends Component{
                     justifyContent:'flex-start',
                     alignItems:'center',
                     padding:10}}>
-            <Image source={require('../.././image/nopass.png')} style={{width:20,height:20}}/>
+            <Image source={require('../../res/image/nopass.png')} style={{width:20,height:20}}/>
             <Text style={{marginLeft:10}}>我的积分：</Text>
             <Text style={{color:'#FFC935'}}>150</Text>
       </View>

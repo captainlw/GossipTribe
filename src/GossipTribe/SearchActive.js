@@ -9,6 +9,8 @@ import {
     TextInput,
     TouchableOpacity,
     Text,
+    Image,
+    TouchableWithoutFeedback,
 } from 'react-native';
 var TextInputState = TextInput.State;
 import SearchResult from './SearchResult';
@@ -20,7 +22,7 @@ export default class SearchActive extends Component {
         super(props);
         this.state={
             focus:true,
-            searchText:"",
+            searchText:'',
         }
     }
     //隐藏键盘
@@ -33,6 +35,12 @@ export default class SearchActive extends Component {
         const {navigator} = this.props;
         if (navigator) {
             navigator.pop();
+        }
+    }
+
+    _delete(){
+        if (this.myTextInput !== null) {
+            this.myTextInput.clear();
         }
     }
 
@@ -54,12 +62,21 @@ export default class SearchActive extends Component {
                     <TouchableOpacity style={styles.searchCancel} onPress={this._cancel.bind(this,1)}>
                         <Text style={styles.searchCancelText}>取消</Text>
                     </TouchableOpacity>
+                    <View style={styles.search_icon_root}>
+                    <Image style={styles.search_icon} source={require('./res/search_icon.png')}/>
+                        </View>
                     <View style={styles.searchInputRoot}>
                         <TextInput style={styles.searchInput} keyboardType={'web-search'}
                                    autoFocus={this.state.focus}
                                    placeholder={'编号/作品名/作者名/创作年龄/培训机构'}
                                    placeholderTextColor={'#ADADAD'}
-                                   onChangeText={(searchText)=>this.setState({searchText})}/>
+                                   onChangeText={(searchText)=>this.setState({searchText})}
+                                   ref={(ref) => this.myTextInput = ref}/>
+                    </View>
+                    <View style={styles.delete_icon_root}>
+                        <TouchableWithoutFeedback  onPress={this._delete.bind(this)}>
+                            <Image style={styles.delete_icon} source={require('./res/delete.png')}/>
+                        </TouchableWithoutFeedback>
                     </View>
                     <TouchableOpacity style={styles.searchGo} onPress={this._go.bind(this,1)}>
                         <Text style={styles.searchGoText}>搜索</Text>
@@ -88,8 +105,6 @@ const styles = StyleSheet.create({
     searchInputRoot:{
         flex: 5,
         borderColor: 'white',
-        borderWidth: 3,
-        borderRadius:3,
     },
     searchInput: {
         backgroundColor: 'white',
@@ -97,16 +112,45 @@ const styles = StyleSheet.create({
         fontSize:13,
     },
     searchCancel: {
-        flex: 1,
     },
     searchCancelText: {
         textAlign: 'center',
+        marginLeft:5,
+        marginRight:5,
     },
     searchGo: {
-        flex: 1,
     },
     searchGoText: {
         textAlign: 'center',
+        marginLeft:5,
+        marginRight:5,
+    },
+    search_icon_root: {
+        backgroundColor: 'white',
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomLeftRadius: 3,
+        borderTopLeftRadius: 3,
+    },
+    search_icon: {
+        width: 20,
+        height: 20,
+        marginLeft: 5,
+    },
+
+    delete_icon_root:{
+        height: 40,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomRightRadius:3,
+        borderTopRightRadius:3,
+    },
+    delete_icon:{
+        width: 20,
+        height: 20,
+        marginRight:10,
     }
 
 

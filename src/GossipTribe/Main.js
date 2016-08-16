@@ -22,6 +22,7 @@ import {
     ListView,
     TouchableOpacity,
     PixelRatio,
+    RefreshControl,
 } from 'react-native';
 let lineHeight = 1 / PixelRatio.get();
 var API_KEY = '7waqfqbprs7pajbz28mqf6vz';
@@ -41,11 +42,17 @@ const PDATA = [
     'http://playertest.longtailvideo.com/adaptive/captions/playlist.m3u8',
     'http://playertest.longtailvideo.com/adaptive/oceans_aes/oceans_aes.m3u8'
 ];
+
+let CHOICE = 1;
+let LATEST = 2;
+let MOVEMENT = 3;
+let PROGRAM = 4;
 export default  class Main extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            isRefreshing: false,
             selectedTab: 'gallery',
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
@@ -64,11 +71,9 @@ export default  class Main extends Component {
 
     }
 
-    //生命周期方法，异步获取服务器数据进行加载
+    //生命周期方法，异步获取服务器数据进行加载,默认加载画廊数据
     componentDidMount() {
         this.setGalleryData();
-        this.setMovementData();
-        this.setProgramData();
     }
 
     //友盟分享设置qq和微信key
@@ -157,6 +162,17 @@ export default  class Main extends Component {
         });
     }
 
+    //下拉刷新请求数据
+    _onRefresh(mContent) {
+        this.setState({isRefreshing: true});
+        setTimeout(() => {
+            this.setState({
+                isRefreshing: false,
+            });
+        }, 2000);
+    }
+
+
     renderGallery(movie, sectionDI, rowID) {
 
         return <View style={styles.gallery_item_style}>
@@ -189,7 +205,7 @@ export default  class Main extends Component {
     }
 
 
-    rendorMovieMent(data, sectionDI, rowID) {
+    renderMovieMent(data, sectionDI, rowID) {
         return (<View style={styles.movement_list_item}>
             <TouchableOpacity onPress={this._goMovement.bind(this, 'movement')}>
                 <View style={styles.movement_list_item_root}>
@@ -204,7 +220,7 @@ export default  class Main extends Component {
         </View>);
     }
 
-    rendorProgram(data, sectionDI, rowID) {
+    renderProgram(data, sectionDI, rowID) {
         return (
             <View style={styles.program_list_item}>
                 <Video
@@ -226,6 +242,32 @@ export default  class Main extends Component {
         );
     }
 
+    setSelectedGallery(){
+        this.setState({selectedTab: 'gallery'});
+        this.setGalleryData();
+    }
+
+    setSelectedMovementTab(){
+        this.setState({selectedTab: 'movement'});
+        this.setMovementData();
+    }
+
+    setSelectedProgram(){
+        this.setState({selectedTab: 'program'});
+        this.setProgramData();
+    }
+
+    //Listview下拉刷新控件
+    getRefreshControl(type){
+        return  <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={this._onRefresh.bind(this,type)}
+            tintColor="#ff0000"
+            title="Loading..."
+            titleColor="#00ff00"
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor="#ffff00"/>;
+    }
 
     render() {
         let GalleryView;
@@ -249,9 +291,11 @@ export default  class Main extends Component {
                     style={{flex: 1}}
                     indicator={this._renderTitleIndicator()}>
                     <View>
-                        <ListView
-                            dataSource={this.state.dataSource}
-                            renderRow={this.renderGallery.bind(this)}/>
+                            <ListView
+                                dataSource={this.state.dataSource}
+                                renderRow={this.renderGallery.bind(this)}
+                                refreshControl={this.getRefreshControl(CHOICE)
+                                }/>
                         <View style={styles.floating}>
                             <TouchableOpacity onPress={this._addProduct.bind(this)}>
                             <Image source={require('./res/add.png')} style={styles.floatingImage}/>
@@ -262,7 +306,9 @@ export default  class Main extends Component {
                     <View>
                         <ListView
                             dataSource={this.state.dataSource}
-                            renderRow={this.renderGallery.bind(this)}/>
+                            renderRow={this.renderGallery.bind(this)}
+                            refreshControl={
+                                this.getRefreshControl(LATEST)}/>
                     </View>
                 </IndicatorViewPager>
             </View>
@@ -284,9 +330,13 @@ export default  class Main extends Component {
         if (this.state.movementLoaded) {
             movementView = <View style={styles.container}>
                 {movementTitleView}
-                <ListView
-                    dataSource={this.state.movementDataSource}
-                    renderRow={this.rendorMovieMent.bind(this)}/>
+
+                    <ListView
+                        dataSource={this.state.movementDataSource}
+                        renderRow={this.renderMovieMent.bind(this)}
+                        refreshControl={
+                            this.getRefreshControl(MOVEMENT)}
+                    />
             </View>
         }
         else {
@@ -307,7 +357,9 @@ export default  class Main extends Component {
                 {programTitleView}
                 <ListView
                     dataSource={this.state.programDataSource}
-                    renderRow={this.rendorProgram.bind(this)}/>
+                    renderRow={this.renderProgram.bind(this)}
+                    refreshControl={
+                        this.getRefreshControl(PROGRAM)}/>
             </View>
         }
         else {
@@ -328,7 +380,7 @@ export default  class Main extends Component {
                                              source={require('./res/tab_weixin_normal.png')}/>}
                     renderSelectedIcon={() => <Image style={styles.gallery_bottom_icon}
                                                      source={require('./res/tab_weixin_pressed.png')}/>}
-                    onPress={() => this.setState({selectedTab: 'gallery'})}>
+                    onPress={this.setSelectedGallery.bind(this)}>
                     {GalleryView}
                 </TabNavigator.Item>
 
@@ -339,7 +391,7 @@ export default  class Main extends Component {
                                              source={require('./res/tab_address_normal.png')}/>}
                     renderSelectedIcon={() => <Image style={styles.gallery_bottom_icon}
                                                      source={require('./res/tab_address_pressed.png')}/>}
-                    onPress={() => this.setState({selectedTab: 'movement'})}>
+                    onPress={this.setSelectedMovementTab.bind(this)}>
                     {movementView}
                 </TabNavigator.Item>
 
@@ -350,7 +402,7 @@ export default  class Main extends Component {
                                              source={require('./res/tab_find_frd_normal.png')}/>}
                     renderSelectedIcon={() => <Image style={styles.gallery_bottom_icon}
                                                      source={require('./res/tab_find_frd_pressed.png')}/>}
-                    onPress={() => this.setState({selectedTab: 'program'})}>
+                    onPress={this.setSelectedProgram.bind(this)}>
                     {programView}
                 </TabNavigator.Item>
 

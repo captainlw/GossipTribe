@@ -7,8 +7,8 @@ import {
     StyleSheet,
     View,
     Text,
+    ActivityIndicator,
 } from 'react-native';
-import ProgressBar from 'ProgressBarAndroid';
 export default class LoadingView extends Component {
     constructor(props) {
         super(props);
@@ -18,7 +18,7 @@ export default class LoadingView extends Component {
         return (
             <View style={styles.loading}>
                 <Text style={styles.loadingText}>正在加载数据...</Text>
-                <ProgressBar styleAttr="Inverse"/>
+                <ActivityIndicator size="large"/>
             </View>
         );
     }

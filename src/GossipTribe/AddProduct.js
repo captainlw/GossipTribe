@@ -35,9 +35,12 @@ export default class AddProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            hasImageData: false,
             avatarSource: require('./res/add.png'),
             productCreateAge: "",
             productName: "",
+            DELETE_HEIGHT : 0,
+            DELETE_WIDTH : 0,
         }
     }
 
@@ -57,11 +60,26 @@ export default class AddProduct extends Component {
             }
             //发布作品,向服务器上传数据
             else{
-                alert("发布作品： " + this.state.productCreateAge+"  "+this.state.productName);
+                if(this.state.hasImageData){
+                    alert("发布作品： " + this.state.productCreateAge+"  "+this.state.productName);
+                }else{
+                    alert("请添加一张图片")
+                }
+
             }
 
 
         }
+    }
+
+    _delete(){
+
+        this.setState({
+            avatarSource: require('./res/add.png'),
+            hasImageData: false,
+            DELETE_HEIGHT : 0,
+            DELETE_WIDTH : 0,
+        });
     }
 
     _addProduct(action) {
@@ -78,6 +96,9 @@ export default class AddProduct extends Component {
                 const source = {uri: response.uri, isStatic: true};
                 this.setState({
                     avatarSource: source,
+                    hasImageData: true,
+                    DELETE_HEIGHT : 30,
+                    DELETE_WIDTH : 30,
                 });
             }
         });
@@ -109,6 +130,9 @@ export default class AddProduct extends Component {
                 <View style={styles.product_content_image_root}>
                     <TouchableOpacity onPress={this._addProduct.bind(this, 0)}>
                         <Image style={styles.product_content_image} source={this.state.avatarSource}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this._delete.bind(this)} style={styles.product_content_delete_touch}>
+                    <Image style={{width:this.state.DELETE_WIDTH,height:this.state.DELETE_HEIGHT}} source={require('./res/delete.png')}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.line}/>
@@ -189,6 +213,14 @@ const styles = StyleSheet.create({
     product_content_image: {
         width: 100,
         height: 100,
+    },
+    product_content_delete_touch:{
+        position: 'absolute',
+        left: 80,
+        top: 0,
+        width: 30,
+        height: 30,
+
     },
     line: {
         height: lineHeight,

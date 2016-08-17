@@ -13,6 +13,7 @@ import MyScene from './MyScene';
 import MyName from './MyName';
 import ChangeName from './ChangeName';
 import ImagePicker from 'react-native-image-picker';
+import SelectBirthDay from './SelectBirthDay';
 
 var options = {
   title: '选择作品',
@@ -30,6 +31,10 @@ export default class PersonInfo extends Component{
         super(props);
         this.state = {
             avatarSource: require('../../res/image/favicon.jpeg'),
+            personName:this.props.personName,
+            address:this.props.address,
+            birth:this.props.birth,
+            school:this.props.school,
         }
       }
 
@@ -49,92 +54,107 @@ export default class PersonInfo extends Component{
      }
 
     _goBack(){
-      if(this._navigator&&this._navigator.getCurrentRoutes.length>1){
-        this._navigator.pop();
+      let _navigator = this.props._navigator;
+      if(_navigator&&_navigator.getCurrentRoutes().length>1){
+            _navigator.pop();
       }
     }
 
 
   render(){
+    let _thiz = this;
     return(
-  <View style={{flexDirection:'column',
-                justifyContent:'flex-start',
-                backgroundColor:'#EEEEEE',
-                flex:1,
-            }}>
-      <View style={{flexDirection:'row',
-                    justifyContent:'center',
-                    alignItems:'center',
-                    backgroundColor:'#FFC125',
-                    height:40,
-                    padding:10,
-                  }}>
-      <TouchableOpacity onPress={this._goBack}>
-      <Image source={require('../../res/image/back.png')}
-              style={{width:10,height:20,
-                    position:'absolute',
-                    top:5,
-                    left:10}}/>
-      </TouchableOpacity>
-      <Text style={{textAlign:'center',
-                    fontSize:20,}}>{this.props.name}</Text>
-      </View>
-      <ScrollView>
-      <TouchableOpacity onPress={this._changeIcon.bind(this)}>
-        <View style={[styles.menuContainer,styles.menuIcon]}>
-          <Text style={{}}>头像</Text>
+      <View style={{flexDirection:'column',
+                    justifyContent:'flex-start',
+                    backgroundColor:'#EEEEEE',
+                    flex:1,
+                }}>
           <View style={{flexDirection:'row',
-                        justifyContent:'flex-start',
-                        alignItems:'center'}}>
-            <Image source={this.state.avatarSource}
-            style={styles.menuImage}/>
-            <Image
-            source={require('../../res/image/right.png')}/>
+                        justifyContent:'center',
+                        alignItems:'center',
+                        backgroundColor:'#FFC125',
+                        height:40,
+                        padding:10,
+                      }}>
+          <TouchableOpacity onPress={this._goBack.bind(this)}
+                            style={{position:'absolute',
+                                    top:10,
+                                    left:10}}>
+          <Image source={require('../../res/image/back.png')}
+                  style={{width:10,height:20,}}/>
+          </TouchableOpacity>
+          <Text style={{textAlign:'center',
+                        fontSize:20,}}>{this.props.name}</Text>
           </View>
-        </View>
-      </TouchableOpacity>
-      <MenuItem
-          title="小画家姓名"
-          params="悄悄牛牛"
-          onForward={()=>{
-            this.props._navigator.push({
-              name:this.props.params,
-              component:ChangeName,
-            });
-          }}
-        />
-      <MenuItem
-        title="小画家出生日期"
-        params="2008-12-10"
-        onForward={()=>{
-          this.props._navigator.push({
-            name:'小画家的姓名',
-            component:MyScene,
-            _navigator:this.props.navigator
-          });
-        }}/>
+          <ScrollView>
 
-      <MenuItem
-        title="地址"
-        params="上海浦东新区"
-        onForward={()=>{
-          this.props._navigator.push({
-            name:'小画家的姓名',
-            component:MyScene
-          });
-        }}/>
+          <TouchableOpacity onPress={this._changeIcon.bind(this)}>
+            <View style={[styles.menuContainer,styles.menuIcon]}>
+              <Text style={{}}>头像</Text>
+              <View style={{flexDirection:'row',
+                            justifyContent:'flex-start',
+                            alignItems:'center'}}>
+                <Image source={this.state.avatarSource}
+                style={styles.menuImage}/>
+                <Image
+                source={require('../../res/image/right.png')}/>
+              </View>
+            </View>
+          </TouchableOpacity>
 
-      <MenuItem
-        title="培训机构"
-        params="浦东新区少年"
-        onForward={()=>{
-          this.props._navigator.push({
-            name:'小画家的姓名',
-            component:MyScene
-          });
-        }}/>
-    </ScrollView>
-  </View>
+          <MenuItem
+              title="小画家姓名"
+              params={this.state.personName}
+              onForward={()=>{
+                this.props._navigator.push({
+                  component:ChangeName,
+                  params:{
+                    personName:this.state.personName,
+                    title:"小画家姓名",
+                    _navigator:this.props._navigator,
+                    changeName:function(name){
+                      _thiz.setState({personName:name})
+                    }
+                  }
+                });
+              }}
+            />
+
+          <MenuItem
+            title="小画家出生日期"
+            params={this.state.birth}
+            onForward={()=>{
+              this.props._navigator.push({
+                component:SelectBirthDay,
+                params:{
+                  title:'选择出生日期',
+                  _navigator:this.props._navigator,
+                  date:this.state.birth,
+                }
+              });
+            }}/>
+
+          <MenuItem
+            title="地址"
+            params={this.state.address}
+            onForward={()=>{
+              this.props._navigator.push({
+                name:'地址',
+                component:MyScene
+              });
+            }}/>
+
+          <MenuItem
+            title="培训机构"
+            params={this.state.school}
+            onForward={()=>{
+              this.props._navigator.push({
+                name:'小画家的姓名',
+                component:MyScene
+              });
+            }}/>
+        </ScrollView>
+      </View>
   )
   }
 }

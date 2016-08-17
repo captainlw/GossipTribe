@@ -33,6 +33,10 @@ export default class Personal extends Component{
             params:{
               name:"个人信息",
               _navigator:this.props._navigator,
+              personName:"小屁孩",
+              address:"上海",
+              birth:"2016-08-17",
+              school:"浦东新区少年宫",
             }
           })
       }}>
@@ -43,7 +47,7 @@ export default class Personal extends Component{
                       justifyContent:'flex-start',
                       alignItems:'center',
                       marginLeft:5}}>
-                <Text>乔乔妞妞</Text>
+                <Text>小屁孩</Text>
                 <Text>上海 7岁</Text>
                 <Text>浦东新区少年宫</Text>
           </View>

@@ -157,7 +157,8 @@ export default class AddProduct extends Component {
                     <TextInput style={styles.product_content_description }
                                placeholder={'作品描述 (选填, 50字以内)'}
                                underlineColorAndroid={'transparent'}
-                               placeholderTextColor={'#ADADAD'}/>
+                               placeholderTextColor={'#ADADAD'}
+                               multiline={true}/>
                 </View>
 
 
@@ -265,13 +266,14 @@ const styles = StyleSheet.create({
         textAlign: 'right',
     },
     product_content_description_root: {
-        flex: 1,
+        height: 100,
     },
     product_content_description: {
+        flex: 1,
         fontSize: 18,
         color: 'grey',
         marginLeft: 5,
-
+        textAlignVertical:'top',
     },
 
 

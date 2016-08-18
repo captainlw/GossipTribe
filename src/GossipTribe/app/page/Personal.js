@@ -5,7 +5,7 @@ import PersonInfo from './PersonInfo';
 import PersonZone from './PersonZone';
 import PersonIntegration from './PersonIntegration';
 import PersonRule from './PersonRule';
-import MyScene from './MyScene';
+
 
 import ChangeName from './ChangeName';
 export default class Personal extends Component{
@@ -35,7 +35,7 @@ export default class Personal extends Component{
               _navigator:this.props._navigator,
               personName:"小屁孩",
               address:"上海",
-              birth:"2016-08-17",
+              birth:"2008-08-17",
               school:"浦东新区少年宫",
             }
           })
@@ -63,7 +63,11 @@ export default class Personal extends Component{
           icon={require('../../res/image/personal.png')}
           onForward={()=>{
             this.props._navigator.push({
-              component:PersonZone
+              component:PersonZone,
+              params:{
+                name:'个人空间',
+                _navigator:this.props._navigator,
+              }
             });
           }}
         />
@@ -72,7 +76,11 @@ export default class Personal extends Component{
         icon={require('../../res/image/intergate.png')}
         onForward={()=>{
           this.props._navigator.push({
-            component:PersonIntegration
+            component:PersonIntegration,
+            params:{
+              name:'积分',
+              _navigator:this.props._navigator,
+            }
           });
         }}/>
 
@@ -81,7 +89,11 @@ export default class Personal extends Component{
         icon={require('../../res/image/rule.png')}
         onForward={()=>{
           this.props._navigator.push({
-            component:ChangeName
+            component:PersonRule,
+            params:{
+              name:'规则说明',
+              _navigator:this.props._navigator,
+            }
           });
         }}/>
       </View>

@@ -1,25 +1,63 @@
 import React,{Component,PropTypes} from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,TextInput,Image,DatePickerAndroid} from 'react-native';
 
-
+    var birthYear;
+    var birthMonth;
+    var birthDay;
+    var currentYear;
+    var age;
     export default class SelectBirth extends Component{
       constructor(props){
+        super(props);
+        var age = this._getAge(this.props.date);
+        this.state = {
+          age:age,
+          year:1970,
 
+        }
+      }
 
-
+      _getAge(yearStr){
+        var arr = yearStr.split("-");
+        birthYear = arr[0];
+        birthMonth = arr[1];
+        birthDay = arr[2];
+        currentYear = new Date().getFullYear();
+        age = currentYear-birthYear;
+        return age;
       }
 
       _cancle(){
-
+        let _navigator = this.props._navigator;
+        if(_navigator&&_navigator.getCurrentRoutes().length>1){
+              _navigator.pop();
+        }
       }
 
       _save(){
-
+        var birthday = birthYear+'-'+birthMonth+'-'+birthDay;
+        this.props.selectBirthDay(birthday);
+        let _navigator = this.props._navigator;
+        if(_navigator&&_navigator.getCurrentRoutes().length>1){
+              _navigator.pop();
+        }
       }
 
-      _showDatePicker(){
-
-      }
+      async _showDatePicker(){
+        try {
+              const {action, year, month, day} = await DatePickerAndroid.open({
+              date: new Date(birthYear,birthMonth-1,birthDay)});
+              if (action !== DatePickerAndroid.dismissedAction) {
+                  var age = currentYear-year;
+                  this.setState({age:age})
+              }
+              birthYear = year;
+              birthMonth = month+1;
+              birthDay = day;
+            } catch ({code, message}) {
+                console.warn('Cannot open date picker', message);
+            }
+    }
 
       render(){
           return(
@@ -51,7 +89,7 @@ import {View,Text,TouchableOpacity,StyleSheet,TextInput,Image,DatePickerAndroid}
                               backgroundColor:'#FFFFFF',
                               marginTop:10}}>
                     <Text style={{fontSize:14}}>年龄</Text>
-                    <Text style={{marginLeft:10,}}></Text>
+                    <Text style={{marginLeft:10,fontSize:14,}}>{this.state.age}岁</Text>
                  </View>
                </TouchableOpacity>
             </View>

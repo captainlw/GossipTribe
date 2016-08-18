@@ -22,33 +22,53 @@ export default class PersonIntegration extends Component{
   }
 
 
+  _goBack(){
+    let _navigator = this.props._navigator;
+    if(_navigator&&_navigator.getCurrentRoutes().length>1){
+          _navigator.pop();
+    }
+  }
+
   render(){
     return(
       <View style={{flexDirection:'column',
-                  flex:1}}>
-      <IntegrationNumber/>
-      <ListView
-      dataSource={this.state.dataSource}
-      renderRow={(rowData,sectionId)=><IntegrationItem  title={rowData[0]} mark={rowData[1]}/>}
-      renderSectionHeader={(sectionData,sectionId)=><IntegrationSectionItem section={sectionId}/>}
-      style={{marginTop:20,flex:1}}
-      />
-     </View>
-    );
-  }
-}
-
-class IntegrationNumber extends Component{
-  render(){
-    return(
-      <View style={{flexDirection:'row',
                     justifyContent:'flex-start',
-                    alignItems:'center',
-                    padding:10}}>
-            <Image source={require('../../res/image/nopass.png')} style={{width:20,height:20}}/>
-            <Text style={{marginLeft:10}}>我的积分：</Text>
-            <Text style={{color:'#FFC935'}}>150</Text>
-      </View>
+                    flex:1}}>
+                  <View style={{flexDirection:'row',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                backgroundColor:'#FFC125',
+                                height:40,
+                                padding:10,
+                              }}>
+                  <TouchableOpacity onPress={this._goBack.bind(this)}
+                                    style={{position:'absolute',
+                                            top:10,
+                                            left:10}}>
+                  <Image source={require('../../res/image/back.png')}
+                          style={{width:10,height:20,}}/>
+                  </TouchableOpacity>
+                  <Text style={{textAlign:'center',
+                                fontSize:20,}}>{this.props.name}</Text>
+                  </View>
+
+                  <View style={{flexDirection:'row',
+                                justifyContent:'flex-start',
+                                alignItems:'center',
+                                alignSelf:"flex-end",
+                                padding:10}}>
+                        <Image source={require('../../res/image/nopass.png')} style={{width:20,height:20}}/>
+                        <Text style={{marginLeft:10}}>我的积分：</Text>
+                        <Text style={{color:'#FFC935'}}>150</Text>
+                  </View>
+
+                  <ListView
+                  dataSource={this.state.dataSource}
+                  renderRow={(rowData,sectionId)=><IntegrationItem  title={rowData[0]} mark={rowData[1]}/>}
+                  renderSectionHeader={(sectionData,sectionId)=><IntegrationSectionItem section={sectionId}/>}
+                  style={{marginTop:20,flex:1}}
+                  />
+     </View>
     );
   }
 }

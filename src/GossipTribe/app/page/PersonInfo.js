@@ -9,11 +9,11 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
-import MyScene from './MyScene';
-import MyName from './MyName';
-import ChangeName from './ChangeName';
 import ImagePicker from 'react-native-image-picker';
+import ChangeName from './ChangeName';
 import SelectBirthDay from './SelectBirthDay';
+import SelectAddress from './SelectAddress';
+import ChangeSchool from './ChangeSchool';
 
 var options = {
   title: '选择作品',
@@ -86,6 +86,7 @@ export default class PersonInfo extends Component{
           <Text style={{textAlign:'center',
                         fontSize:20,}}>{this.props.name}</Text>
           </View>
+
           <ScrollView>
 
           <TouchableOpacity onPress={this._changeIcon.bind(this)}>
@@ -130,6 +131,9 @@ export default class PersonInfo extends Component{
                   title:'选择出生日期',
                   _navigator:this.props._navigator,
                   date:this.state.birth,
+                  selectBirthDay:function(birthday){
+                    _thiz.setState({birth:birthday})
+                  }
                 }
               });
             }}/>
@@ -139,8 +143,13 @@ export default class PersonInfo extends Component{
             params={this.state.address}
             onForward={()=>{
               this.props._navigator.push({
-                name:'地址',
-                component:MyScene
+                component:SelectAddress,
+                params:{
+                  title:'地址',
+                  _navigator:this.props._navigator,
+                  address:this.state.address
+
+                }
               });
             }}/>
 
@@ -149,8 +158,15 @@ export default class PersonInfo extends Component{
             params={this.state.school}
             onForward={()=>{
               this.props._navigator.push({
-                name:'小画家的姓名',
-                component:MyScene
+                component:ChangeSchool,
+                params:{
+                  trainSchool:this.state.school,
+                  title:"培训机构",
+                  _navigator:this.props._navigator,
+                  changeSchool:function(school){
+                    _thiz.setState({school:school})
+                  }
+                }
               });
             }}/>
         </ScrollView>

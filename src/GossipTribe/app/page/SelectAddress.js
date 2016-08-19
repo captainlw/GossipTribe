@@ -62,10 +62,6 @@ export default class SelectAddress extends Component{
   }
 
 
-  _getCityIndex(){
-    var citys = Object.key(CITYS);
-    alert("citys--->"+citys);
-  }
 
 
   _cancle(){
@@ -73,16 +69,30 @@ export default class SelectAddress extends Component{
     if(_navigator&&_navigator.getCurrentRoutes().length>1){
           _navigator.pop();
     }
-
   }
 
   _save(){
+      this.props.selectAddress(this.state.province,this.state.city,this.state.detailedAddress);
+      let _navigator = this.props._navigator;
+      if(_navigator&&_navigator.getCurrentRoutes().length>1){
+            _navigator.pop();
+      }
+  }
 
-
+  _confirmPicker(){
+    this.setState({
+      pickerHeight:0,
+    });
   }
 
 
   _canclePicker(){
+    this.setState({
+      pickerHeight:0,
+    });
+  }
+
+  _confirmPicker(){
     this.setState({
       pickerHeight:0,
     });
@@ -96,6 +106,8 @@ export default class SelectAddress extends Component{
 
   render(){
     let _address = this.state.province+this.state.city;
+    let selectPro = this.state.province;
+    let selectCity = this.state.city;
     return(
       <View  style={{flexDirection:'column',
                     justifyContent:'space-between',
@@ -168,7 +180,7 @@ export default class SelectAddress extends Component{
                                     <Text>取消</Text>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={this._confirmPicker.bind(this)}>
                                     <Text>确定</Text>
                                     </TouchableOpacity>
                       </View>
@@ -182,7 +194,7 @@ export default class SelectAddress extends Component{
                           <View style={{flex:1}}>
                             <Picker
                                 selectedValue={this.state.province}
-                                onValueChange={(province) => this.setState({province, cityIndex: 0})}>
+                                onValueChange={(province) => {this.setState({province})}}>
                                 {Object.keys(CITYS).map((province) => (
                                     <PickerItem
                                         key={province}
@@ -197,11 +209,11 @@ export default class SelectAddress extends Component{
                             <Picker
                                 selectedValue={this.state.city}
                                 key={this.state.province}
-                                onValueChange={(cityIndex) => this.setState({cityIndex})}>
-                                {CITYS[this.state.province].city.map((cityName, cityIndex) => (
+                                onValueChange={(city) => {this.setState({city});}}>
+                                {CITYS[this.state.province].city.map((cityName) => (
                                     <PickerItem
-                                        key={this.state.province + '_' + cityIndex}
-                                        value={cityIndex}
+                                        key={cityName}
+                                        value={cityName}
                                         label={cityName}
                                     />
                                 ))}

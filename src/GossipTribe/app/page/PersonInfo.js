@@ -156,6 +156,13 @@ export default class PersonInfo extends Component{
                   province:this.state.province,
                   city:this.state.city,
                   detailedAddress:this.state.detailedAddress,
+                  selectAddress:function(province,city,detail){
+                    _thiz.setState({
+                      province:province,
+                      city:city,
+                      detailedAddress:detail,
+                    });
+                  }
                 }
               });
             }}/>

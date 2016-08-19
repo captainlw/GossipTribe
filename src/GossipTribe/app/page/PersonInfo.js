@@ -33,6 +33,9 @@ export default class PersonInfo extends Component{
             avatarSource: require('../../res/image/favicon.jpeg'),
             personName:this.props.personName,
             address:this.props.address,
+            province:this.props.province,
+            city:this.props.city,
+            detailedAddress:this.props.detailedAddress,
             birth:this.props.birth,
             school:this.props.school,
         }
@@ -63,6 +66,7 @@ export default class PersonInfo extends Component{
 
   render(){
     let _thiz = this;
+    let _address = this.state.province+this.state.city+this.state.detailedAddress;
     return(
       <View style={{flexDirection:'column',
                     justifyContent:'flex-start',
@@ -98,7 +102,8 @@ export default class PersonInfo extends Component{
                 <Image source={this.state.avatarSource}
                 style={styles.menuImage}/>
                 <Image
-                source={require('../../res/image/right.png')}/>
+                source={require('../../res/image/right.png')}
+                        style={[styles.menuRight]}/>
               </View>
             </View>
           </TouchableOpacity>
@@ -140,15 +145,17 @@ export default class PersonInfo extends Component{
 
           <MenuItem
             title="地址"
-            params={this.state.address}
+            params={_address}
             onForward={()=>{
               this.props._navigator.push({
                 component:SelectAddress,
                 params:{
                   title:'地址',
                   _navigator:this.props._navigator,
-                  address:this.state.address
-
+                  address:this.state.address,
+                  province:this.state.province,
+                  city:this.state.city,
+                  detailedAddress:this.state.detailedAddress,
                 }
               });
             }}/>

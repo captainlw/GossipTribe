@@ -1,0 +1,52 @@
+{
+  "name": "react-native-dialogs",
+  "version": "0.0.16",
+  "description": "React Native wrappers for https://github.com/afollestad/material-dialogs ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aakashns/react-native-dialogs.git"
+  },
+  "keywords": [
+    "react-native",
+    "android",
+    "react-component"
+  ],
+  "author": {
+    "name": "Aakash N S"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aakashns/react-native-dialogs/issues"
+  },
+  "homepage": "https://github.com/aakashns/react-native-dialogs#readme",
+  "gitHead": "2228c32bbc17adfeee6439a7503dc3488d85ace1",
+  "_id": "react-native-dialogs@0.0.16",
+  "_shasum": "a3fe4b87cf4b277648e3c2d59f9c777c8b2af267",
+  "_from": "react-native-dialogs@0.0.16",
+  "_npmVersion": "3.9.0",
+  "_nodeVersion": "6.1.0",
+  "_npmUser": {
+    "name": "aakashns",
+    "email": "aakashns.sky@gmail.com"
+  },
+  "dist": {
+    "shasum": "a3fe4b87cf4b277648e3c2d59f9c777c8b2af267",
+    "tarball": "https://registry.npmjs.org/react-native-dialogs/-/react-native-dialogs-0.0.16.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "aakashns",
+      "email": "aakashns.sky@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/react-native-dialogs-0.0.16.tgz_1469688902351_0.4619346777908504"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/react-native-dialogs/-/react-native-dialogs-0.0.16.tgz"
+}

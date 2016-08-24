@@ -35,6 +35,9 @@ export default class Personal extends Component{
               _navigator:this.props._navigator,
               personName:"小屁孩",
               address:"上海",
+              province:'上海',
+              city:'浦东新区',
+              detailedAddress:'浦东软件园',
               birth:"2008-08-17",
               school:"浦东新区少年宫",
             }

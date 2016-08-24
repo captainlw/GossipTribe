@@ -48,16 +48,23 @@ let CITYS = {
        新疆:{province:"新疆",city:["乌鲁木齐市","克拉玛依市","吐鲁番","哈密","昌吉","博尔塔拉蒙古","巴音郭楞蒙古","阿克苏地区","克孜勒苏柯尔克孜","喀什","和田","伊犁哈萨克","塔城地区","阿勒泰地区","自治区直辖县级行政区划"]},
 };
 
+var selectPro;
+var selectCity;
+
 export default class SelectAddress extends Component{
 
   constructor(props){
     super(props);
+    selectPro = this.props.province;
+    selectCity = this.props.city;
+    let _address = selectPro+selectCity;
     this.state = {
       pickerHeight:0,
       province:this.props.province,
       city:this.props.city,
       detailedAddress:this.props.detailedAddress,
       cityIndex:0,
+      _address:_address,
     }
   }
 
@@ -80,21 +87,21 @@ export default class SelectAddress extends Component{
   }
 
   _confirmPicker(){
+    selectPro = this.state.province;
+    selectCity = this.state.city;
+    let _address = selectPro+selectCity;
     this.setState({
       pickerHeight:0,
+      _address:_address,
     });
-  }
 
+  }
 
   _canclePicker(){
     this.setState({
       pickerHeight:0,
-    });
-  }
-
-  _confirmPicker(){
-    this.setState({
-      pickerHeight:0,
+      province:selectPro,
+      city:selectCity,
     });
   }
 
@@ -106,8 +113,7 @@ export default class SelectAddress extends Component{
 
   render(){
     let _address = this.state.province+this.state.city;
-    let selectPro = this.state.province;
-    let selectCity = this.state.city;
+
     return(
       <View  style={{flexDirection:'column',
                     justifyContent:'space-between',
@@ -140,7 +146,7 @@ export default class SelectAddress extends Component{
                                     alignItems:'center',
                                     padding:10,}}>
                                     <Text style={{width:60}}>省市</Text>
-                                    <Text>{_address}</Text>
+                                    <Text>{this.state._address}</Text>
                                     <Image source={require('../../res/image/right.png')}
                                            style={{position:'absolute',
                                                     top:10,
@@ -194,7 +200,13 @@ export default class SelectAddress extends Component{
                           <View style={{flex:1}}>
                             <Picker
                                 selectedValue={this.state.province}
-                                onValueChange={(province) => {this.setState({province})}}>
+                                onValueChange={(province) => {
+                                  var _city = CITYS[province].city[0];
+                                  this.setState({
+                                    province:province,
+                                    city:_city,
+                                  })
+                                }}>
                                 {Object.keys(CITYS).map((province) => (
                                     <PickerItem
                                         key={province}
@@ -225,19 +237,3 @@ export default class SelectAddress extends Component{
     );
   }
 }
-
-
-
-const sceneStyle = StyleSheet.create({
-  container:{
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
-  },
-
-  text:{
-    textAlign:'center',
-    fontSize:24
-  }
-
-});

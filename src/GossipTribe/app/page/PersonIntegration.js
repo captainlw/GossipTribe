@@ -33,6 +33,7 @@ export default class PersonIntegration extends Component{
     return(
       <View style={{flexDirection:'column',
                     justifyContent:'flex-start',
+                    backgroundColor:'#EEEEEE',
                     flex:1}}>
                   <View style={{flexDirection:'row',
                                 justifyContent:'center',
@@ -55,8 +56,8 @@ export default class PersonIntegration extends Component{
                   <View style={{flexDirection:'row',
                                 justifyContent:'flex-start',
                                 alignItems:'center',
-                                alignSelf:"flex-end",
-                                padding:10}}>
+                                backgroundColor:'#FFFFFF',
+                                padding:20}}>
                         <Image source={require('../../res/image/nopass.png')} style={{width:20,height:20}}/>
                         <Text style={{marginLeft:10}}>我的积分：</Text>
                         <Text style={{color:'#FFC935'}}>150</Text>
@@ -66,7 +67,7 @@ export default class PersonIntegration extends Component{
                   dataSource={this.state.dataSource}
                   renderRow={(rowData,sectionId)=><IntegrationItem  title={rowData[0]} mark={rowData[1]}/>}
                   renderSectionHeader={(sectionData,sectionId)=><IntegrationSectionItem section={sectionId}/>}
-                  style={{marginTop:20,flex:1}}
+                  style={{marginTop:10,flex:1}}
                   />
      </View>
     );
@@ -83,10 +84,13 @@ class IntegrationItem extends Component{
                       padding:5,
                       borderBottomWidth:1,
                       borderBottomColor:'#EEEEEE',
+                      backgroundColor:'#FFFFFF',
                     }}>
               <View style={{flexDirection:'row',
                             justifyContent:'flex-start',
-                            alignItems:'center'}}>
+                            alignItems:'center',
+                            marginLeft:10,
+                          }}>
                 <View style={{width:8,height:8,borderRadius:360,backgroundColor:'#EEEEEE'}}/>
                 <Text style={{marginLeft:5}}>{this.props.title}</Text>
               </View>
